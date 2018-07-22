@@ -1,0 +1,8 @@
+animal_net= (BayesNet()
+.add('Animal', [], {('monkey'):0.2,('penguin'):0.2,('platypus'):0.2,('bird'):0.2,('turtle'):0.2})
+.add('HasShell',[Animal],{('monkey'):ProbDist(true:0,false:1),('penguin'):ProbDist(true:0,false:1),('platypus'):ProbDist(true:0,false:1),('bird'):ProbDist(true:0,false:1),('turtle'):ProbDist(true:1,false:0)})
+.add('Environment',[Animal],{('monkey'):ProbDist(air:0,land:1,water:0),('penguin'):ProbDist(air:0,land:0.5,water:0.5),('platypus'):ProbDist(air:0,land:0,water:1),('bird'):ProbDist(air:0.5,land:0.5,water:0),('turtle'):ProbDist(air:0,land:0.5,water:0.5)})
+.add('Class',[Animal],{('monkey'):ProbDist(mammal:1,robin:0,reptile:0),('penguin'):ProbDist(mammal:0,robin:1,reptile:0),('platypus'):ProbDist(mammal:1,robin:0,reptile:0),('bird'):ProbDist(mammal:0,robin:1,reptile:0),('turtle'):ProbDist(mammal:0,robin:0,reptile:1)})
+.add('BodyCovering',[Class],{('mammal'):ProbDist(feathers:0,fur:1,scales:0),('robin'):ProbDist(feathers:1,fur:0,scales:0),('reptile'):ProbDist(feathers:0,fur:0,scales:1)})
+.add('BearsYoungAs',[Animal],{('monkey'):ProbDist(live:1,eggs:0),('penguin'):ProbDist(live:0,eggs:1),('platypus'):ProbDist(live:0,eggs:1),('bird'):ProbDist(live:0,eggs:1),('turtle'):ProbDist(live:0,eggs:1)})
+.add('WarmBlooded',[Class],{('mammal'):ProbDist(true:1,false:0),('robin'):ProbDist(true:1,false:0),('reptile'):ProbDist(true:0,false:1)}))

@@ -1,0 +1,4 @@
+
+.add('Animal', [], {('monkey'):0.2,('penguin'):0.2,('platypus'):0.2,('robin'):0.2,('turtle'):0.2})
+.add('HasShell',['Animal'],{('monkey'):ProbDist(true=0,false=1),('penguin'):ProbDist(true=0,false=1),('platypus'):ProbDist(true=0,false=1),('robin'):ProbDist(true=0,false=1),('turtle'):ProbDist(true=0,false=1)})
+.add('Outro',['Animal', 'HasShell', ],{('monkey','true'):ProbDist(true=0,false=1),('monkey','false'):ProbDist(true=1,false=0),('penguin','true'):ProbDist(true=0,false=1),('penguin','false'):ProbDist(true=1,false=0),('platypus','true'):ProbDist(true=0,false=1),('platypus','false'):ProbDist(true=0,false=1),('robin','true'):ProbDist(true=1,false=0),('robin','false'):ProbDist(true=1,false=0),('turtle','true'):ProbDist(true=0,false=1),('turtle','false'):ProbDist(true=1,false=0)})
