@@ -37,6 +37,7 @@ if temLookup:
         lookup = pickle.load(entrada)
         print(lookup)
 res = ""
+
 while temTabela:
     res = ""
     variavel = input("Nome da variável:")
@@ -56,16 +57,17 @@ while temTabela:
 
     if pais is None:
         builder = "\n.add('" + variavel + "', [], {"
-        n = len(valores)-1
+        n = len(valores)
         i = 0
+        linha = input("Probabilidades:").split(" ")
         for valor in valores:
-            i += 1
-            probabilidade = input("Probabilidade do valor "+ valor +":")
+            probabilidade = linha[i]
             builder += "('"+valor+"'):" + probabilidade
-            if i <= n:
+            if i < n-1:
                 builder += ","
             else:
                 builder += "})"
+            i += 1
         res += builder
     else:
         builder = "\n.add('" + str(variavel) + "',"+str_lista(parents)+",{"
@@ -73,32 +75,42 @@ while temTabela:
         perm = permutacoes(vals)
         max = len(perm)
         k = 0
-        for p in perm:
-            condicoes = []
-            n = len(parents)
-            builder += "("
-            for i in range(n):
-                condicoes.append(parents[i].domain[p[i]])
-                builder += "'" + parents[i].domain[p[i]] + "'"
-                if i < n-1:
+        n_parents = len(parents)
+        arquivo_entrada = input("arquivo de entrada:")
+        with open(arquivo_entrada, "r") as distribuicao:
+            for line in distribuicao:
+                condicoes = []
+                line = line.replace(" (","")
+                line = line.replace(")","")
+                line = line.replace(":", "")
+                line = line.replace(";", "")
+                line = line.replace("  ", " ")
+                print(line)
+                linha = line.strip("\n").split(" ")
+                builder += "("
+                for i in range(n_parents):
+                    p = int(linha[i])
+                    condicoes.append(parents[i].domain[p])
+                    builder += "'" + parents[i].domain[p] + "'"
+                    if i < n_parents-1:
+                        builder += ","
+                    else:
+                        builder += "):"
+                probabilidades = linha[n_parents:]
+                builder += "ProbDist("
+                n = len(valores)
+                for i in range(n):
+                    builder += valores[i] + "=" + probabilidades[i]
+                    if i < n-1:
+                        builder += ","
+                    else:
+                        builder += ")"
+                k += 1
+                if k < max:
                     builder += ","
                 else:
-                    builder += "):"
-            probabilidades = input("Probabilidades dados " +str(condicoes) + ":").split(" ")
-            builder += "ProbDist("
-            n = len(valores)
-            for i in range(n):
-                builder += valores[i] + "=" + probabilidades[i]
-                if i < n-1:
-                    builder += ","
-                else:
-                    builder += ")"
-            k += 1
-            if k < max:
-                builder += ","
-            else:
-                builder += "})"
-        res += builder
+                    builder += "})"
+            res += builder
 
     s_n = input("Ainda tem tabela?(s/n)")
     temTabela = True if s_n == "s" else False
