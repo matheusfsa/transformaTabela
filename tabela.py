@@ -38,6 +38,7 @@ if temLookup:
         print(lookup)
 res = ""
 while temTabela:
+    res = ""
     variavel = input("Nome da variável:")
 
     valores = input("Valores possíveis(separados por espaço): ").split(" ")
@@ -101,7 +102,7 @@ while temTabela:
 
     s_n = input("Ainda tem tabela?(s/n)")
     temTabela = True if s_n == "s" else False
-with open(lookup_name,"wb") as output:
-    print(lookup)
-    pickle.dump(lookup, output, pickle.HIGHEST_PROTOCOL)
-saida.write(res)
+    with open(lookup_name,"wb") as output:
+        print(lookup)
+        pickle.dump(lookup, output, pickle.HIGHEST_PROTOCOL)
+    saida.write(res)
